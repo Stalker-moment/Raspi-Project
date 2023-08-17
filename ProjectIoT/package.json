@@ -1,0 +1,23 @@
+{
+  "name": "projectiot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "sudo node servotest.js",
+    "pretest": "sudo node servotest.js",
+    "start": "sudo node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "node-cron": "^3.0.2",
+    "pigpio": "^3.3.1",
+    "raspberry-info": "^1.0.4",
+    "rpi-status": "^1.4.0",
+    "sleep": "^6.3.0",
+    "wiring-pi": "^2.2.1"
+  }
+}
