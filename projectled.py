@@ -17,8 +17,8 @@ valuev0 = 0
 valuev1 = 0
 valuev2 = 0
 
-led1_pin = 2  
-led2_pin = 3  
+led1_pin = 14  
+led2_pin = 15
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(led1_pin, GPIO.OUT)
@@ -40,7 +40,7 @@ def mode1():
     stop_signalm31 = True
     stop_signalm32 = True
     display.lcd_display_string("Index Mode :", 1)  # Write line of text to first line of display
-    display.lcd_display_string("MODE 1", 2)  # Write line of text to second line of display
+    display.lcd_display_string("MODE 1  ", 2)  # Write line of text to second line of display
     
 def mode2():
     global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32
@@ -51,7 +51,7 @@ def mode2():
     stop_signalm31 = True
     stop_signalm22 = True
     display.lcd_display_string("Index Mode :", 1)  # Write line of text to first line of display
-    display.lcd_display_string("MODE 2", 2)  # Write line of text to second line of display
+    display.lcd_display_string("MODE 2  ", 2)  # Write line of text to second line of display
     
 def modeoff():
     global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32
@@ -73,7 +73,7 @@ def mode3():
     stop_signalm31 = False
     stop_signalm32 = False
     display.lcd_display_string("Index Mode :", 1)  # Write line of text to first line of display
-    display.lcd_display_string("MODE 3", 2)  # Write line of text to second line of display
+    display.lcd_display_string("MODE 3  ", 2)  # Write line of text to second line of display
     
     
 def led1_thread():
@@ -136,7 +136,7 @@ def blynk_read():
     print(res)
 
 def blynk_write(pin, value):
-    url = f"http://blynk-cloud.com/{BLYNK_AUTH}/update/{pin}?value={value}"
+    url = f"http://blynk-cloud.com/{blynkserver}/update/{pin}?value={blynktoken}"
     requests.get(url)
     
 activate_called = False
@@ -183,3 +183,4 @@ try:
 
 except KeyboardInterrupt:
     GPIO.cleanup()
+
