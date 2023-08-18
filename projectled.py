@@ -30,9 +30,10 @@ stop_signalm21 = True
 stop_signalm22 = True
 stop_signalm31 = True
 stop_signalm32 = True
+indexmode = ''
 
 def mode1():
-    global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32
+    global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32, indexmode
     stop_signalm11 = False
     stop_signalm12 = False
     stop_signalm21 = True
@@ -41,9 +42,10 @@ def mode1():
     stop_signalm32 = True
     display.lcd_display_string("Index Mode :", 1)  # Write line of text to first line of display
     display.lcd_display_string("MODE 1  ", 2)  # Write line of text to second line of display
+    indexmode = 'MODE 1'
     
 def mode2():
-    global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32
+    global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32, indexmode
     stop_signalm11 = True
     stop_signalm12 = True
     stop_signalm21 = False
@@ -52,9 +54,10 @@ def mode2():
     stop_signalm22 = True
     display.lcd_display_string("Index Mode :", 1)  # Write line of text to first line of display
     display.lcd_display_string("MODE 2  ", 2)  # Write line of text to second line of display
+    indexmode = 'MODE 2'
     
 def modeoff():
-    global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32
+    global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32, indexmode
     stop_signalm11 = True
     stop_signalm12 = True
     stop_signalm21 = True
@@ -63,9 +66,10 @@ def modeoff():
     stop_signalm32 = True
     display.lcd_display_string("Index Mode :", 1)  # Write line of text to first line of display
     display.lcd_display_string("MODE OFF", 2)  # Write line of text to second line of display
+    indexmode = 'MODE OFF'
     
 def mode3():
-    global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32
+    global stop_signalm11, stop_signalm12, stop_signalm21, stop_signalm22, stop_signalm31, stop_signalm32, indexmode
     stop_signalm11 = True
     stop_signalm12 = True
     stop_signalm21 = True
@@ -74,6 +78,7 @@ def mode3():
     stop_signalm32 = False
     display.lcd_display_string("Index Mode :", 1)  # Write line of text to first line of display
     display.lcd_display_string("MODE 3  ", 2)  # Write line of text to second line of display
+    indexmode = 'MODE 3'
     
     
 def led1_thread():
@@ -135,9 +140,10 @@ def blynk_read():
     #print(type(valuev1))
     print(res)
 
-def blynk_write(pin, value):
-    url = f"http://blynk-cloud.com/{blynkserver}/update/{pin}?value={blynktoken}"
-    requests.get(url)
+def blynk_write():
+    global indexmode
+    urli = f"https://${blynkserver}/external/api/update?token=${blynktoken}&V3=${indexmode}"
+    getin = requests.get(urli)
     
 activate_called = False
 
@@ -160,7 +166,8 @@ def activate():
 
 try:
     while True:
-        blynk_read()      
+        blynk_read()
+        #blynk_write()
         if valuev0 == 1 and valuev1 == 0 and valuev2 == 0 :
             mode1()
             activate()
